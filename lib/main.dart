@@ -1,49 +1,30 @@
+//import 'package:farm_conn/farm_screens/signin_screen.dart';
+import 'package:agri_shop/farm_screens/bottom_navigation.dart';
+import 'package:agri_shop/farm_screens/splash_screen.dart';
+import 'package:agri_shop/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-// import 'package:get/get_core/src/get_main.dart';
-// import 'package:get/get_navigation/get_navigation.dart';
 
-import 'crops.dart';
-import 'animals.dart';
-
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Landing Page"),
-        ),
-        body: ListView(
-          children: [
-            // const ListTile(
-            //   leading: Icon(Icons.water_drop),
-            //   title: Text("Crops"),
-            // ),
-            ListTile(
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              title: const Text("Animals"),
-              onTap: () {
-                Get.to(() => const Animals());
-              },
-            ),
-            ListTile(
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              title: const Text("Crops"),
-              onTap: () {
-                Get.to(() => const Crops());
-              },
-            ),
-          ],
-        ),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFFF4FAF4),
+        useMaterial3: true,
       ),
+      home: const SplashScreen(),
     );
   }
 }

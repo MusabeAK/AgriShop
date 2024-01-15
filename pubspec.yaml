@@ -7,10 +7,22 @@ environment:
   sdk: ">=3.2.3 <4.0.0"
 
 dependencies:
-  get: ^4.3.8
-
   flutter:
     sdk: flutter
+
+  get: ^4.3.8
+  cupertino_icons: ^1.0.2
+  firebase_core: ^2.23.0
+  firebase_auth: ^4.14.1
+  cloud_firestore: ^4.13.2
+  http: ^1.1.0
+  intl: ^0.19.0
+  modal_bottom_sheet: ^2.1.2
+  curved_labeled_navigation_bar: ^2.0.2
+  firebase_storage: ^11.5.6
+  scroll_snap_list: ^0.9.1
+  flutter_svg: ^2.0.9
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

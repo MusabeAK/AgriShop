@@ -5,9 +5,23 @@ import 'package:get/get.dart';
 import 'package:agri_shop/crops.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard(int counter, {super.key});
+  int indexTrack = 0;
+  String imageUrl;
+  String itemName;
+  String itemPrice;
+  ProductCard({
+    super.key,
+    required this.indexTrack,
+    required this.imageUrl,
+    required this.itemName,
+    required this.itemPrice,
+  });
+
   @override
-  State<ProductCard> createState() => _ProductCardState();
+  State<ProductCard> createState() {
+    // indexTrack++;
+    return _ProductCardState();
+  }
 }
 
 class _ProductCardState extends State<ProductCard> {
@@ -17,7 +31,7 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    var counter = 1;
+
     return GestureDetector(
       onTap: () {
         Get.to(() => const Product());
@@ -50,10 +64,9 @@ class _ProductCardState extends State<ProductCard> {
           ),
           child: Column(
             children: [
-              Image(
-                image: const AssetImage(
-                    'assets/images/crops_ui.jpg'), // Adjust the path accordingly
-                width: 0.4 * screenWidth, // Set the width as needed
+              Image.network(
+                widget.imageUrl,
+                width: 0.4 * screenWidth,
                 height: 0.2 * screenHeight,
                 fit: BoxFit.contain,
               ),
@@ -62,19 +75,19 @@ class _ProductCardState extends State<ProductCard> {
               ),
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       children: [
                         Text(
-                          "Green Pepper",
-                          style: TextStyle(
+                          widget.itemName,
+                          style: const TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.left,
                         ),
                         Text(
-                          "\$12.00",
+                          "\$${widget.itemPrice}",
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
@@ -91,17 +104,14 @@ class _ProductCardState extends State<ProductCard> {
                     height: 30,
                     width: 30,
                     child: FloatingActionButton(
-                      onPressed: () {
-                        Get.to(() => const Crops());
-                      },
-                      heroTag: "hero tag $counter",
+                      onPressed: () {},
+                      heroTag: "hero tag ${widget.indexTrack}",
                       tooltip: 'Add to cart',
                       hoverColor: Colors.black26,
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.green,
                       shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(15.0)), // Set the border radius
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
                       ),
                       child: const Icon(
                         Icons.add,

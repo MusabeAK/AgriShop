@@ -1,17 +1,15 @@
+import 'package:agri_shop/cards/product_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'product.dart';
-import 'package:get/get.dart';
 
 class Animals extends StatelessWidget {
   const Animals({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Animals Here"),
-      ),
-      body: const AnimalsWidget(),
+    return const Scaffold(
+      body: AnimalsWidget(),
     );
   }
 }
@@ -21,106 +19,100 @@ class AnimalsWidget extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _CropsWidgetState createState() => _CropsWidgetState();
+  _AnimalsWidgetState createState() => _AnimalsWidgetState();
 }
 
-class _CropsWidgetState extends State<AnimalsWidget> {
+class _AnimalsWidgetState extends State<AnimalsWidget> {
+  late Stream<QuerySnapshot> _stream;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchImageUrls();
+    _stream = FirebaseFirestore.instance.collection('animals').snapshots();
+  }
+
+  List<String> imageUrls = []; // List to store image URLs
+
+  Future<void> fetchImageUrls() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection("animals").get();
+
+      for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+        String imagePath =
+            doc['imageUrl']; // Replace with your actual field name
+        Reference ref = FirebaseStorage.instance.ref().child(imagePath);
+        String url = await ref.getDownloadURL();
+        setState(() {
+          imageUrls.add(url);
+        });
+      }
+    } catch (e) {
+      print('Error fetching image URLs: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Wrap(
-            spacing: 5.0, // horizontal spacing between items
-            runSpacing: 5.0, // vertical spacing between lines
-            children: List.generate(
-              10,
-              (index) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: const Color(0xFFEEF0EE),
-                ),
-                width: 0.4 * screenWidth,
-                height: 0.3 * screenHeight,
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(
-                  left: 20,
-                  top: 20,
-                  right: 10,
-                  bottom: 10,
-                ),
-                child: Column(
-                  children: [
-                    Image(
-                      image: const AssetImage(
-                          'assets/images/crops_ui.jpg'), // Adjust the path accordingly
-                      width: 0.4 * screenWidth, // Set the width as needed
-                      height: 0.2 * screenHeight,
-                      fit: BoxFit.contain,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        const Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                "Green Pepper",
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                              Text(
-                                "\$12.00",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: FloatingActionButton(
-                            onPressed: () {
-                              Get.to(() => const Product());
-                            },
-                            heroTag: "hero tag $index",
-                            tooltip: 'Add to cart',
-                            hoverColor: Colors.black26,
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.green,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(
-                                  15.0)), // Set the border radius
-                            ),
-                            child: const Icon(
-                              Icons.add,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+      child: StreamBuilder<QuerySnapshot>(
+          stream: _stream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Center(
+                    child: Text(
+                  'Error fetching data!',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                  ),
+                )),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Center(
+                    child: Text(
+                  'No items available',
+                  style: TextStyle(
+                      color: Colors.green.withOpacity(9), fontSize: 20),
+                )),
+              );
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting ||
+                imageUrls.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return Column(
+              children: [
+                Wrap(
+                  spacing: 5.0, // horizontal spacing between items
+                  runSpacing: 5.0, // vertical spacing between lines
+                  children: List.generate(
+                    snapshot.data!.docs.length,
+                    (index) {
+                      final Map<String, dynamic> data =
+                          snapshot.data!.docs[index].data()
+                              as Map<String, dynamic>;
+                      return ProductCard(
+                        indexTrack: index,
+                        imageUrl: imageUrls[index],
+                        itemPrice: data['price'],
+                        itemName: data['name'],
+                      );
+                    },
+                  ),
+                )
+              ],
+            );
+          }),
     );
   }
 }
