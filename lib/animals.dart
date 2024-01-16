@@ -87,7 +87,10 @@ class _AnimalsWidgetState extends State<AnimalsWidget> {
 
             if (snapshot.connectionState == ConnectionState.waiting ||
                 imageUrls.isEmpty) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: Colors.green,
+              ));
             }
 
             return Column(
@@ -106,6 +109,7 @@ class _AnimalsWidgetState extends State<AnimalsWidget> {
                         imageUrl: imageUrls[index],
                         itemPrice: data['price'],
                         itemName: data['name'],
+                        description: data['description'],
                       );
                     },
                   ),

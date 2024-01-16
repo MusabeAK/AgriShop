@@ -3,20 +3,43 @@ import 'crops.dart';
 import 'package:get/get.dart';
 
 class Product extends StatelessWidget {
-  const Product({super.key});
-
+  String imageUrl;
+  String itemName;
+  String itemPrice;
+  String description;
+  Product({
+    super.key,
+    required this.imageUrl,
+    required this.itemName,
+    required this.itemPrice,
+    required this.description,
+  });
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       extendBody: true,
-      body: ProductWidget(),
+      body: ProductWidget(
+        imageUrl: imageUrl,
+        itemName: itemName,
+        itemPrice: itemPrice,
+        description: description,
+      ),
     );
   }
 }
 
 class ProductWidget extends StatefulWidget {
-  const ProductWidget({super.key});
-
+  String imageUrl;
+  String itemName;
+  String itemPrice;
+  String description;
+  ProductWidget({
+    super.key,
+    required this.imageUrl,
+    required this.itemName,
+    required this.itemPrice,
+    required this.description,
+  });
   @override
   // ignore: library_private_types_in_public_api
   _CropsWidgetState createState() => _CropsWidgetState();
@@ -43,12 +66,11 @@ class _CropsWidgetState extends State<ProductWidget> {
               children: [
                 ClipPath(
                   clipper: BottomCurveClipper(),
-                  child: Image(
+                  child: Image.network(
+                    widget.imageUrl,
+                    width: screenWidth,
+                    height: 0.4 * screenHeight,
                     fit: BoxFit.fill,
-                    image: const AssetImage(
-                        'assets/images/crops_ui.jpg'), // Adjust the path accordingly
-                    width: screenWidth, // Set the width as needed
-                    height: 0.4 * screenHeight, // Set the height as needed
                   ),
                 ),
                 Padding(
@@ -93,12 +115,12 @@ class _CropsWidgetState extends State<ProductWidget> {
               ),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Green Pepper",
+                          widget.itemName,
                           style: TextStyle(
                             color: Colors.black87,
                             fontWeight: FontWeight.bold,
@@ -107,7 +129,7 @@ class _CropsWidgetState extends State<ProductWidget> {
                           textAlign: TextAlign.left,
                         ),
                         Text(
-                          "\$12.00",
+                          "\$${widget.itemPrice}",
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
@@ -143,10 +165,10 @@ class _CropsWidgetState extends State<ProductWidget> {
                 ],
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20.0, right: 20),
               child: Text(
-                """adipisicing elit. Aliquam qui alias reprehenderit sint aliquid, itaque porro sapiente rem reiciendis facere? Ducimus provident minima quibusdam, ipsa expedita minus?""",
+                widget.description,
                 style: TextStyle(
                   color: Colors.black54,
                 ),

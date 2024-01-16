@@ -1,9 +1,8 @@
+import 'package:agri_shop/farm_screens/home2/Groups/video.dart';
 import 'package:agri_shop/home_index.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
-import 'package:agri_shop/farm_screens/home2/Groups/group_screen.dart';
-import 'package:agri_shop/farm_screens/home2/Sales/sales_screen.dart';
 import 'package:agri_shop/farm_screens/home2/Weather/weather_screen.dart';
 import 'package:agri_shop/farm_screens/home2/Hire/hireshare.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     const HomeIndex(),
     const SilverBar(),
     const WeatherScreen(),
-    const GroupScreen(),
+    VideosScreen(),
   ];
 
   @override

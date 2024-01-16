@@ -9,12 +9,14 @@ class ProductCard extends StatefulWidget {
   String imageUrl;
   String itemName;
   String itemPrice;
+  String description;
   ProductCard({
     super.key,
     required this.indexTrack,
     required this.imageUrl,
     required this.itemName,
     required this.itemPrice,
+    required this.description,
   });
 
   @override
@@ -34,7 +36,12 @@ class _ProductCardState extends State<ProductCard> {
 
     return GestureDetector(
       onTap: () {
-        Get.to(() => const Product());
+        Get.to(() => Product(
+              imageUrl: widget.imageUrl,
+              itemPrice: widget.itemPrice,
+              description: widget.description,
+              itemName: widget.itemName,
+            ));
       },
       child: MouseRegion(
         onEnter: (_) {
@@ -68,7 +75,7 @@ class _ProductCardState extends State<ProductCard> {
                 widget.imageUrl,
                 width: 0.4 * screenWidth,
                 height: 0.2 * screenHeight,
-                fit: BoxFit.contain,
+                fit: BoxFit.fill,
               ),
               const SizedBox(
                 height: 15,
@@ -77,6 +84,8 @@ class _ProductCardState extends State<ProductCard> {
                 children: [
                   Expanded(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           widget.itemName,
@@ -88,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                         Text(
                           "\$${widget.itemPrice}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
                           ),

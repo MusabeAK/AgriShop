@@ -137,7 +137,7 @@ class _ShareItemFormState extends State<ShareItemForm> {
 
             // Hidden imageUrl field
             Container(
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: _imageUrlController,
                 enabled: false,
@@ -149,8 +149,8 @@ class _ShareItemFormState extends State<ShareItemForm> {
               margin: EdgeInsets.only(
                   left: MediaQuery.of(context).size.width / 2.5,
                   right: 20,
-                  top: 10,
-                  bottom: 10),
+                  top: 5,
+                  bottom: 5),
               child: FloatingActionButton(
                 heroTag: 'Select Image',
                 onPressed: _getImage,
@@ -173,7 +173,7 @@ class _ShareItemFormState extends State<ShareItemForm> {
             ),
 
             Container(
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: _itemNameController,
                 decoration: const InputDecoration(
@@ -191,16 +191,16 @@ class _ShareItemFormState extends State<ShareItemForm> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(
                   labelText: 'Description',
-                  errorText: "Please enter description",
+                  // errorText: "Please enter description",
                   iconColor: Colors.green,
-                  errorStyle: TextStyle(
-                    color: Colors.red,
-                  ),
+                  // errorStyle: TextStyle(
+                  //   color: Colors.red,
+                  // ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -216,7 +216,7 @@ class _ShareItemFormState extends State<ShareItemForm> {
 
             if (_image != null) Image.file(_image!),
             Container(
-              margin: EdgeInsets.all(20),
+              margin: EdgeInsets.all(10),
               child: TextFormField(
                 controller: _hirePriceController,
                 decoration: const InputDecoration(labelText: 'Hire Price'),
@@ -233,7 +233,7 @@ class _ShareItemFormState extends State<ShareItemForm> {
               ),
             ),
             Container(
-              margin: EdgeInsets.all(20),
+              margin: EdgeInsets.all(10),
               child: FloatingActionButton(
                 heroTag: "share_item",
                 onPressed: () {

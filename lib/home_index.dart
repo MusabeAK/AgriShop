@@ -1,10 +1,5 @@
-import 'package:agri_shop/farm_screens/splash_screen.dart';
+import 'package:agri_shop/all_products.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
-import 'package:get/get.dart';
-// import 'package:get/get_core/src/get_main.dart';
-// import 'package:get/get_navigation/get_navigation.dart';
-
 import 'crops.dart'; //
 import 'animals.dart';
 
@@ -20,7 +15,7 @@ class _HomeIndexState extends State<HomeIndex> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color(0xFFE7FCE7),
@@ -61,7 +56,7 @@ class _HomeIndexState extends State<HomeIndex> {
                 // fontSize: 15,
               ),
               tabs: [
-                Tab(text: 'All'),
+                // Tab(text: 'All'),
                 Tab(text: 'Crops'),
                 Tab(text: 'Animals'),
               ],
@@ -69,7 +64,7 @@ class _HomeIndexState extends State<HomeIndex> {
           ),
           body: const TabBarView(
             children: [
-              Animals(),
+              // AllProducts(),
               Crops(),
               Animals(),
             ],

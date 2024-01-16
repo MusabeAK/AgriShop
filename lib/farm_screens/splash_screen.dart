@@ -34,25 +34,42 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Color(0xFFE7FCE7), // Customize background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.local_florist,
-              size: 40,
+              size: 80,
             ), // Your app logo or any other widget
-            SizedBox(height: 20),
-            CircularProgressIndicator(), // Loading indicator
-            SizedBox(height: 20),
-            Text(
-              'Farm Connect',
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(
+              color: Colors.green,
+            ), // Loading indicator
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: RichText(
+                text: const TextSpan(
+                  text: 'Agri',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Shop',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25.0,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

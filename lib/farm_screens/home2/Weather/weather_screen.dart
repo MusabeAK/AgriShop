@@ -23,7 +23,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   final Constants _constants = Constants();
 
   // ignore: non_constant_identifier_names
-  static String API_KEY = 'c4ae2960fb314052a47111953232612';
+  static String API_KEY = '680f79359a784f8a8e8143718240901';
 
   String location = 'Kampala'; //Default location
   String weatherIcon = 'heavycloud.png';

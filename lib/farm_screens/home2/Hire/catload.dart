@@ -65,7 +65,10 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
         stream: _stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.green,
+            ));
           } else if (snapshot.hasError) {
             return const Center(child: Text('Error fetching data'));
           } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
@@ -74,7 +77,10 @@ class _CategoryItemsScreenState extends State<CategoryItemsScreen> {
 
           if (snapshot.connectionState == ConnectionState.waiting ||
               imageUrls.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.green,
+            ));
           }
 
           return ScrollSnapList(
